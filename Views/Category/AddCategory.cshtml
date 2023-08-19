@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "AddCategory";
+}
+
+<h2>Category Ekle </h2>
+<form action="/Category/AddCategory" method="post">
+    <div class="form-group">
+        @if (Model != null)
+        {
+            <input type="hidden" class="form-control" name="category_id" value="@Model.category_id" id="category_id">
+
+        }
+        <label for="formGroupExampleInput">Kategori Adı</label>
+        @if (Model != null)
+        {
+            <input type="text" class="form-control" name="category_name" value="@Model.category_name" id="category_name" placeholder="Kategori Adı">
+
+        }
+        else
+        {
+            <input type="text" class="form-control" name="category_name" @*value="@Model.category_name"*@ id="category_name" placeholder="Kategori Adı">
+
+        }
+
+    </div>
+    <div class="form-group">
+        <label for="formGroupExampleInput2">Kategori Tantımı</label>
+        @if (Model != null)
+        {
+            <input type="text" class="form-control" name="description" value="@Model.description" id="description" placeholder="Tantim">
+
+        }
+        else
+        {
+            <input type="text" class="form-control" name="description" @*value="@Model.description"*@ id="description" placeholder="Tantim">
+
+        }
+        <div class="col-auto">
+            <br />
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            <button type="reset" class="btn btn-primary mb-2">Rest</button>
+        </div>
+    </div>
+</form>
+
+

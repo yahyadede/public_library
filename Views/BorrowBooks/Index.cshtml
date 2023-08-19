@@ -1,0 +1,65 @@
+﻿@using KutuphaneSystemi.Models
+@model List<BorrowedBooksView>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kitap sipariş  listesi</h2>
+
+
+<div class="text-center" style="display:inline-block; margin-block-end:20px">
+    <a href="#" class="btn btn-primary addBtn" data-toggle="modal" data-target="#addModal"> Yeni Kitap Ekle</a>
+
+</div>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Öğrenci Adı</th>
+            <th scope="col"> Kitap adı</th>
+            <th scope="col"> alma tarih</th>
+            <th scope="col"> teslim tarih</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BorrowedBooksView c in Model)
+        {
+            <tr>
+                <td>@c.borrow_id</td>
+                <td>@c.student_name</td>
+                <td>@c.book_title</td>
+                <td>@c.borrow_date</td>
+                <td>@c.return_date</td>
+
+
+
+
+                <td><a class="btn btn-danger rounded bSil" data-toggle="modal" data-target="#myModal" data-bId="@c.borrow_id" href="#">Sil</a></td>
+
+                <td>
+                    <a class="btn btn-success rounded btnUpdate"
+                      
+                       href="/BorrowBooks/BorrowBook">
+                        Güncelle
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+
+</table>
+
+
+
+
+
+
+
+
+
+

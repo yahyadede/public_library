@@ -1,0 +1,385 @@
+﻿@using KutuphaneSystemi.Models
+@model List<Employee>
+
+    
+@{
+    ViewBag.Title = "Index";
+}
+
+@section employeetDelete{
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Çalışan Sil</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="mesaj"></p>
+                    <p class="hata"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                    <button type="button" class="btn btn-danger bsil">Evet</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+}
+
+@section employeeAdd{
+    <!-- Modal for Adding New Author -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Yeni Öğrenci Ekle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addEmpolyeeForm">
+
+                        <div class="form-group">
+                            <label for="name">Çalışan Adı</label>
+                            <input type="text" class="form-control" id="name" placeholder="Çalışan Adı">
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Çalışan SoyAdı</label>
+                            <input type="text" class="form-control" id="surname" placeholder="Çalışan SoyAdı">
+                        </div>
+                        <div class="form-group">
+                            <label for="library_id">Kütüphane Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="Library" id="library_id" aria-label="State">
+
+                                    @foreach (Library t in ViewBag.library as List<Library>)
+                                    {
+                                        <option value="@t.library_id">@t.name</option>
+                                    }
+                                    @*@if (Model. != null)
+                                    {
+                                        <option value="@Model.library_id" selected>@Model.Library.name</option>
+                                    }*@
+
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Durum</label>
+                            <select class="form-control" id="status">
+                                <option value="tam_zamanli">Tam Zamanli</option>
+                                <option value="yari_zamanli">Yari Zamanli</option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" id="saveEmployee">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section employeeUpdate{
+
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel"> Çalışan Güncelle </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateStudentForm">
+                        <div class="form-group">
+
+                            <input type="hidden" class="form-control update" id="employee_id">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Çalışan Adı</label>
+                            <input type="text" class="form-control update" id="name"  >
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Çalışan SoyAdı</label>
+                            <input type="text" class="form-control update" id="surname" placeholder="Çalışan SoyAdı">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Durum</label>
+                            <select class="form-control update" id="status">
+                                <option value="tam_zamanli">Tam Zamanli</option>
+                                <option value="yari_zamanli">Yari Zamanli</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="library_id">Kütüphane Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select update" name="Library" id="library_id" aria-label="State">
+
+                                    @foreach (Library t in ViewBag.library as List<Library>)
+                                    {
+                                        <option value="@t.library_id">@t.name</option>
+                                    }
+                                    @*@if (Model. != null)
+                    {
+                        <option value="@Model.library_id" selected>@Model.Library.name</option>
+                    }*@
+
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" id="updateEmployee">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<h2>Çalışan Listesi</h2>
+
+
+<div class="text-center" style="display:inline-block; margin-block-end:20px">
+    <a href="#" class="btn btn-primary addBtn" data-toggle="modal" data-target="#addModal"> Yeni Çalışan Ekle</a>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Çalışan Id</th>
+            <th scope="col">Çalışan Adı</th>
+            <th scope="col">Çalışan SoyAdı</th>
+            <th scope="col">Durum</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Employee e in Model)
+        {
+            <tr>
+                <td>@e.employee_id</td>
+                <td>@e.name</td>
+                <td>@e.surname</td>
+                <td>@e.status</td>
+
+
+                <td><a class="btn btn-danger rounded bSil" data-toggle="modal" data-target="#myModal" data-sId="@e.employee_id" data-bAdi="@e.name" href="#">Sil</a></td>
+
+                <td>
+                    <a class="btn btn-success rounded sUpdate"
+                        data-toggle="modal" data-target="#updateModal"
+                       data-sId="@e.employee_id"
+                       data-Adi="@e.name"
+                       data-Surname="@e.surname"
+                       data-status="@e.status"
+                       data-library-id="@e.library_id"
+                       href="#">Güncelle</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+@section secriptEmpolyeeUpdate{
+
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.sUpdate').on('click',function () {
+            
+                const employeeId = $(this).attr('data-sid');
+                const name = $(this).attr('data-adi');
+                const surname = $(this).attr('data-surname');
+                const status = $(this).attr('data-status');
+                const libraryId = $(this).attr('data-library-id');
+            
+               
+            
+
+            $('.update#employee_id').val(employeeId);
+            $('.update#name').val(name);
+            $('.update#surname').val(surname);
+            $('.update#status').val(status);
+            $('.update#library_id').val(libraryId);
+                
+               
+                
+
+                $('#updateModal').modal('show');// Show the modal // Show the modal after populating data
+              
+            });
+        });
+        $("#updateEmployee").click(function () {
+           
+            var id = $(".update#employee_id").val();
+            var name = $(".update#name").val();
+            var surname = $(".update#surname").val();
+            var status = $(".update#status").val();
+            var library_id = $(".update#library_id").val();
+            
+
+
+            var data = {
+                employee_id: id,
+                name: name,
+                surname: surname,
+                status: status,
+                library_id: library_id
+
+            };
+            
+
+            $.ajax({
+                type: "POST",
+                url: "/Employee/Updateemployee/", // Update with your controller action URL
+                data: data,
+                success: function (response) {
+                    $("#updateModal").modal("hide");
+                    location.reload("/Employee/Index/");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Handle error, if any
+                    console.log("Error:", errorThrown);
+                }
+            });
+        });
+
+    </script>
+
+
+
+
+
+
+
+}
+
+@section scriptEmployeetAdd{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Save button click event
+            $("#saveEmployee").click(function () {
+                var name = $("#name").val();
+                var surname = $("#surname").val();
+                var status = $("#status").val();
+                var library_id = $("#library_id").val();
+                
+
+                var data = {
+                    name: name,
+                    surname: surname,
+                    status: status,
+                    library_id: library_id
+
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Employee/Addemployee/", // Update with your controller action URL
+                    data: data,
+                    success: function (response) {
+                        $("#addModal").modal("hide");
+                        location.reload("/Employee/Index/");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle error, if any
+                        console.log("Error:", errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+
+
+@section scriptEmployeetDelete{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+    <script>
+        $(".bSil").click(
+            function () {
+                $(".modal-body>p.hata").html = "";
+                var bAdi = $(this).attr("data-bAdi");
+                $(".modal-body>p.mesaj").html(bAdi + "  slinsin mi?");
+                var bid = $(this).attr("data-sId");
+                $(".bsil").data("bolgeid", bid);
+            }
+
+
+
+
+        );
+        $(".bsil").click(
+            function () {
+                var id = $(this).data("bolgeid");
+                // alert(id);
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Employee/Silemployee/" + id,
+                        success: function () {
+                            alert("Kayit Silindi");
+                            window.location.replace("/Employee/Index");
+                        },
+                        error: function () {
+                            alert("kayit silinmedi");
+                            $(".modal-body>p.hata").html("Hata olustu");
+                        }
+                    }
+
+                );
+
+            }
+
+
+        );
+
+
+
+
+    </script>
+
+
+}

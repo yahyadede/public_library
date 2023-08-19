@@ -1,0 +1,449 @@
+﻿@using KutuphaneSystemi.Models
+@model List<Coffee>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@section coffeeAdd{
+
+
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add New Coffee Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUrunForm">
+
+                        <div class="form-group">
+                            <label for="coffee_name">Urun Adı</label>
+                            <input type="text" class="form-control" id="coffee_name" placeholder="Urun Adı">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Fiyat</label>
+                            <input type="number" class="form-control" id="price" placeholder="Fiyat" min="30" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="availability">Durum</label>
+                            <select class="form-control" id="availability">
+                                <option value="Available">Available</option>
+                                <option value="Not_Available">Not Available</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="library_id">Kütüphane Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="Library" id="library_id" aria-label="State">
+
+                                    @foreach (Library t in ViewBag.libraries as List<Library>)
+                                    {
+                                        <option value="@t.library_id">@t.name</option>
+                                    }
+                                    @*@if (Model != null)
+                                        {
+                                            <option value="@Model.library_id" selected>@Model.Library.name</option>
+                                        }*@
+
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="student_id">Öğrenci Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="Student" id="student_id" aria-label="State">
+
+                                    @foreach (Student t in ViewBag.student as List<Student>)
+                                    {
+                                        <option value="@t.student_id">@t.name</option>
+                                    }
+
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="employee_id">Çalışan Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="Employee" id="employee_id" aria-label="State">
+
+                                    @foreach (Employee t in ViewBag.employees as List<Employee>)
+                                    {
+                                        <option value="@t.employee_id">@t.name</option>
+                                    }
+
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveCoffeeBtn">Save</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section urunDelete{
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Urun Sil</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="mesaj"></p>
+                    <p class="hata"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                    <button type="button" class="btn btn-danger bsil">Evet</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section urunUpdate{
+
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add New Coffee Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUrunForm">
+                        <div>
+                            <input type="hidden" class="form-control update" id="coffee_id">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="coffee_name">Urun Adı</label>
+                            <input type="text" class="form-control update" id="coffee_name" placeholder="Urun Adı">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Fiyat</label>
+                            <input type="number" class="form-control update" id="price" placeholder="Fiyat" min="30" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="availability">Durum</label>
+                            <select class="form-control update" id="availability">
+                                <option value="Available">Available</option>
+                                <option value="Not_Available">Not Available</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="library_id">Kütüphane Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select update" name="Library" id="library_id" aria-label="State">
+
+                                    @foreach (Library t in ViewBag.libraries as List<Library>)
+                                    {
+                                        <option value="@t.library_id">@t.name</option>
+                                    }
+                                    @*@if (Model != null)
+                                        {
+                                            <option value="@Model.library_id" selected>@Model.Library.name</option>
+                                        }*@
+
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="student_id">Öğrenci Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select update" name="Student" id="student_id" aria-label="State">
+
+                                    @foreach (Student t in ViewBag.student as List<Student>)
+                                    {
+                                        <option value="@t.student_id">@t.name</option>
+                                    }
+
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="employee_id">Çalışan Adi</label>
+                            <div class="form-floating mb-3">
+                                <select class="form-select update" name="Employee" id="employee_id" aria-label="State">
+
+                                    @foreach (Employee t in ViewBag.employees as List<Employee>)
+                                    {
+                                        <option value="@t.employee_id">@t.name</option>
+                                    }
+
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateCoffeeBtn">Save</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+}
+
+
+
+<h2>Kantin</h2>
+
+<div class="text-center" style="display:inline-block; margin-block-end:20px">
+    <a href="#" class="btn btn-primary addBtn" data-toggle="modal" data-target="#addModal"> Yeni Urun Ekle</a>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Kantin Id</th>
+            <th scope="col">Urun Adı</th>
+            <th scope="col">Fiyat</th>
+            <th scope="col">Mevcut Durumu</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Coffee c in Model)
+        {
+            <tr>
+                <td>@c.coffee_id</td>
+                <td>@c.coffee_name</td>
+                <td>@c.price</td>
+                <td>@c.availability</td>
+
+                <td><a class="btn btn-danger rounded bSil" data-toggle="modal" data-target="#myModal" data-cId="@c.coffee_id" data-cAdi="@c.coffee_name" href="#">Sil</a></td>
+
+                <td>
+                    <a class="btn btn-success rounded sUpdate" data-toggle="modal" data-target="#updateModal" data-coffee_id="@c.coffee_id"
+                       data-coffee_name="@c.coffee_name" data-price="@c.price" data-availability="@c.availability"
+                       data-library_id="@c.library_id" data-student_id="@c.student_id" data-employee_id="@c.employee_id" href="#">Güncelle</a>
+                </td>
+                
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
+@section scriptUrunUpdate{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $(".sUpdate").click(function () {
+                var coffee_id = $(this).data("coffee_id");
+                var coffee_name = $(this).data("coffee_name");
+                var price = $(this).data("price");
+                var availability = $(this).data("availability");
+                var library_id = $(this).data("library_id");
+                var student_id = $(this).data("student_id");
+                var employee_id = $(this).data("employee_id");
+
+                // You can similarly get other data attributes
+
+                $('.update#coffee_id').val(coffee_id);
+                $(".update#coffee_name").val(coffee_name);
+                $(".update#price").val(price);
+                $(".update#availability").val(availability);
+                $(".update#library_id").val(library_id);
+                $(".update#student_id").val(student_id);
+                $(".update#employee_id").val(employee_id);
+
+                // Set other input fields if needed
+
+                // Show the update modal
+                $("#updateModal").modal("show");
+            });
+
+            // Rest of your AJAX and form submission code
+            $("#updateCoffeeBtn").click(function () {
+               
+                var updatedCoffee = {
+                    coffee_id: $(".update#coffee_id").val(),
+                    coffee_name: $(".update#coffee_name").val(),
+                    price: $(".update#price").val(),
+                    availability: $(".update#availability").val(),
+                    library_id: $(".update#library_id").val(),
+                    student_id: $(".update#student_id").val(),
+                    employee_id: $(".update#employee_id").val()
+                };
+                
+
+                $.ajax({
+                    url: "/Coffee/urunUpdate/",
+                    method: "POST",
+                    data: updatedCoffee,
+                    success: function (response) {
+                        // Handle success response, e.g., display a message or refresh the page
+                        alert("Coffee updated successfully!");
+                        $("#updateModal").modal("hide");
+                        location.reload("/Coffee/Index/");
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response
+                        alert("An error occurred while updating coffee.");
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+
+
+
+    </script>
+
+
+
+}
+
+
+
+@section scriptUrunDelete{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+    <script>
+        $(".bSil").click(
+            function () {
+                $(".modal-body>p.hata").html = "";
+                var bAdi = $(this).attr("data-cAdi");
+                $(".modal-body>p.mesaj").html(bAdi + "  slinsin mi?");
+                var bid = $(this).attr("data-cId");
+                $(".bsil").data("bolgeid", bid);
+            }
+
+
+
+
+        );
+        $(".bsil").click(
+            function () {
+                var id = $(this).data("bolgeid");
+                // alert(id);
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Coffee/urunDelete/" + id,
+                        success: function () {
+                            //alert("Kayit Silindi");
+                            window.location.replace("/Coffee/Index");
+                        },
+                        error: function () {
+                            alert("kayit silinmedi");
+                            $(".modal-body>p.hata").html("Hata olustu");
+                        }
+                    }
+
+                );
+
+            }
+
+
+        );
+
+
+
+
+    </script>
+
+
+}
+
+@section scriptCoffeeAdd{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Save button click event
+            $("#saveCoffeeBtn").click(function () {
+                var coffee_name = $("#coffee_name").val();
+                var price = $("#price").val();
+                var availability = $("#availability").val();
+                var library_id = $("#library_id").val();
+                var student_id = $("#student_id").val();
+                var employee_id = $("#employee_id").val();
+
+                var data = {
+                    coffee_name: coffee_name,
+                    price: price,
+                    availability: availability,
+                    library_id: library_id,
+                    student_id: student_id,
+                    employee_id: employee_id
+                };
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/Coffee/AddUrun/", // Update with your controller action URL
+                    data: data,
+                    success: function (response) {
+                        $("#addModal").modal("hide");
+                        alert("Coffee added successfully!");
+                        location.reload("/Coffee/Index/");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle error, if any
+                        console.log("Error:", errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+
+

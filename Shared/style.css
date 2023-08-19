@@ -1,0 +1,73 @@
+body{
+    margin: 0;
+    cursor: default;
+    transition: 0.4s;
+}
+nav{
+    font-size: 24px;
+    position: fixed;
+    left: 0;
+    display: flex;
+    color: #ffc300;
+    justify-content: space-around start;
+    flex-direction: column;
+    background-color: #001d3d;
+    height: 100%;
+    overflow-y: scroll;
+    padding-top: 35px;
+    padding-right: 5px;
+    width: 250px;
+    height: 710px;
+}
+nav div{
+    color: #ffd60a;
+    padding: 15px 20px 15px 15px;
+    border-radius: 0 5px 5px 0;
+    margin: 10px 5px 10px 0;
+
+}
+nav div:hover{
+    color: #001d3d;
+    background-color: #ffd60a;
+}
+.logout{
+    color: red;
+}
+.logout:hover {
+    color: #001d3d;
+    background-color: red;
+}
+.navButton{
+    position: absolute;
+    left: 18px;
+    top: 7px;
+    padding: 0px;
+}
+.navButton:hover{
+    text-shadow: #ffd60a 0px 0px 10px;
+    background-color: rgba(0, 0, 0, 0);
+    color: #ffc300;
+}
+/*~~~~~~~~~~~~~~*/
+/*scroll bar*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #001d3d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ffd60a;
+    border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #ffc300;
+}
+/*~~~~~~~~~~~~~~~~~~~~~~*/

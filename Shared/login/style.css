@@ -1,0 +1,93 @@
+body{
+    margin: 0;
+    cursor: default;
+    transition: 0.4s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000814;
+}
+*{
+    text-decoration: none;
+}
+*:hover{
+    text-decoration: none;
+}
+main{
+    box-shadow: 2px 2px 10px #001d3d;
+    background-color: #003566;
+    border-radius: 10px;
+    width: 350px;
+    min-height: 350px;
+    padding: 10px;
+}
+main div{
+    padding: 5px;
+    align-self: center;
+}
+main div span{
+    font-size: 27px;
+    font-weight: bold;
+    color: #ffd60a;
+    text-shadow: 0px 0px 10px #ffd857;
+}
+
+.showNhide{
+    color: #ffd60a;
+    text-shadow: 0px 0px 10px #ffd857;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+.forgot span{
+    color: #ef233c;
+    font-size: 16px;
+    text-shadow: none;
+}
+.forgot span:hover{
+    color: #d90429;
+    font-size: 16px;
+    text-shadow: none;
+}
+
+.loginButton button{
+    align-self: center;
+    border: 2px solid #0096c7;
+    color: #48cae4;
+    background-color: #0077b6;
+    text-shadow: none;
+    border-radius: 5px;
+    font-size: 27px;
+}
+.loginButton button:hover {
+    align-self: center;
+    border: 2px solid #48cae4;
+    color: #90e0ef;
+    background-color: #48cae4;
+}
+.signUpButton button {
+    align-self: center;
+    border: 2px solid #0096c7;
+    color: #48cae4;
+    background-color: #0077b6;
+    text-shadow: none;
+    border-radius: 5px;
+    font-size: 27px;
+}
+.signUpButton button:hover {
+    align-self: center;
+    border: 2px solid #48cae4;
+    color: #90e0ef;
+    background-color: #48cae4;
+}
+
+.newUser span a{
+    color: #ffb703;
+    text-shadow: none;
+    font-size: 16px;
+}
+.newUser span a:hover {
+    color: #ffd60a;
+    text-shadow: none;
+    font-size: 16px;
+}

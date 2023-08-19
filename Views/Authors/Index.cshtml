@@ -1,0 +1,334 @@
+﻿@using KutuphaneSystemi.Models
+@model List<Authors>
+@{
+    ViewBag.Title = "Index";
+}
+
+@section authorDelete{
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Yazar Sil</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="mesaj"></p>
+                    <p class="hata"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                    <button type="button" class="btn btn-danger bsil">Evet</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+}
+
+@section authorAdd{
+    <!-- Modal for Adding New Author -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Yeni Yazar Ekle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAuthorForm">
+
+                        <div class="form-group">
+                            <label for="authorName">Yazar Adı</label>
+                            <input type="text" class="form-control" id="authorName" placeholder="Yazar Adı">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthDate">Doğum Tarihi</label>
+                            <input type="date" class="form-control" id="birthDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="nationality">Uyruk</label>
+                            <input type="text" class="form-control" id="nationality" placeholder="Uyruk">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" id="saveAuthor">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+}
+
+@section authorsUpdate{
+
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Güncelle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateAuthorsForm">
+                        <div class="form-group">
+
+                            <input type="hidden" class="form-control update" id="author_id">
+                        </div>
+                        <div class="form-group">
+                            <label for="author_name">Author Adı</label>
+                            <input type="text" class="form-control update" id="author_name" placeholder="Author Adı">
+                        </div>
+                        <div class="form-group">
+                            <label for="birth_date">Tarih</label>
+                            <input type="date" class="form-control update" id="birth_date" placeholder="Tarih">
+                        </div>
+                        <div class="form-group">
+                            <label for="nationality">Uyurk</label>
+                            <input type="text" class="form-control update" id="nationality" placeholder="Uyurk">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" id="saveAuthors">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+}
+
+
+
+<h2> Yazarlar'in listesi</h2>
+
+
+<div class="text-center" style="display:inline-block; margin-block-end:20px">
+    <a href="#" class="btn btn-primary addBtn" data-toggle="modal" data-target="#addModal"> Yeni Yazar Ekle</a>
+
+</div>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Adı</th>
+            <th scope="col"> Doğum Tarihi</th>
+            <th scope="col"> Uyruk</th>
+
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Authors c in Model)
+        {
+            <tr>
+                <td>@c.author_id</td>
+                <td>@c.author_name</td>
+                <td>@c.birth_date</td>
+                <td>@c.nationality</td>
+
+
+
+
+                <td><a class="btn btn-danger rounded bSil" data-toggle="modal" data-target="#myModal" data-bId="@c.author_id" data-bAdi="@c.author_name" href="#">Sil</a></td>
+
+                <td>
+                    <a class="btn btn-success rounded btnUpdate" data-toggle="modal" data-target="#updateModal" data-aID="@c.author_id" 
+                       data-aAdi="@c.author_name" data-birth_date="@c.birth_date" data-nationality="@c.nationality" href="#">
+                        Güncelle
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+
+</table>
+
+
+
+@section scriptsauthorAdd{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Save button click event
+            $("#saveAuthor").click(function () {
+                var authorName = $("#authorName").val();
+                var birthDate = $("#birthDate").val();
+                var nationality = $("#nationality").val();
+
+                var data = {
+                    author_name: authorName,
+                    birth_date: birthDate,
+                    nationality: nationality
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Authors/addAuthors/", // Update with your controller action URL
+                    data: data,
+                    success: function (response) {
+                        $("#addModal").modal("hide");
+                        location.reload();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle error, if any
+                        console.log("Error:", errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+
+
+@section scriptAuthorDelete{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+    <script>
+        $(".bSil").click(
+            function () {
+                $(".modal-body>p.hata").html = "";
+                var bdi = $(this).attr("data-bAdi");
+                $(".modal-body>p.mesaj").html(bdi + "  slinsin mi?");
+                var bid = $(this).attr("data-bId");
+                $(".bsil").data("bolgeid", bid);
+            }
+
+
+
+
+        );
+        $(".bsil").click(
+            function () {
+                var id = $(this).data("bolgeid");
+                // alert(id);
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Authors/authorDelete/" + id,
+                        success: function () {
+                            //alert("Kayit Silindi");
+                            window.location.replace("/Authors/Index");
+                        },
+                        error: function () {
+                            alert("kayit silinmedi");
+                            $(".modal-body>p.hata").html("Hata olustu");
+                        }
+                    }
+
+                );
+
+            }
+
+
+        );
+
+
+
+
+    </script>
+    
+    }
+
+
+
+    @section secriptAuthorsUpdate{
+
+
+        <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+        <script>
+            $(document).ready(function () {
+                $('.btnUpdate').on('click', function () {
+                    var id = $(this).attr("data-aID");
+                    var name = $(this).attr("data-aAdi");
+                    var birth_date = $(this).attr("data-birth_date");
+                    var nationality = $(this).attr("data-nationality");
+                    
+           
+
+
+                    $('.update#author_id').val(id);
+                    $('.update#author_name').val(name);
+                    $('.update#birth_date').val(birth_date);
+                    $('.update#nationality').val(nationality);
+                    
+                   
+
+                    $('#updateModal').modal('show'); // Show the modal after populating data
+                });
+            });
+            $("#saveAuthors").click(function () {
+                var id = $(".update#author_id").val();
+                var name = $(".update#author_name").val();
+                var birth_date = $(".update#birth_date").val();
+                var nationality = $(".update#nationality").val();
+                
+
+                var data = {
+                    author_id: id,
+                    author_name: name,
+                    birth_date: birth_date,
+                    nationality: nationality
+                   
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Authors/updateAuthors/", // Update with your controller action URL
+                    data: data,
+                    success: function (response) {
+                        $("#updateModal").modal("hide");
+                        location.reload("/Authors/Index/");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle error, if any
+                        console.log("Error:", errorThrown);
+                    }
+                });
+            });
+
+        </script>
+
+    
+}

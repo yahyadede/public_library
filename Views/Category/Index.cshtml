@@ -1,0 +1,38 @@
+﻿@using KutuphaneSystemi.Models
+@model List<Categories>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kategori Listesi</h2>
+<div class="text-center" style="display:inline-block; margin-block-end:20px">
+    <a href="/Category/AddCategory" class="btn btn-primary "> Yeni Ürün Ekle</a>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Kategori Id</th>
+            <th scope="col">Kategori Adı</th>
+            <th scope="col">Tantımı</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Categories c in Model)
+        {
+            <tr>
+                <td>@c.category_id</td>
+                <td>@c.category_name</td>
+                <td>@c.description</td>
+                <td><a class="btn btn-danger rounded" href="/Category/SilCategory/@c.category_id">Sil</a></td>
+
+                <td><a class="btn btn-success rounded" href="/Category/UpdateCategory/@c.category_id">Güncelle</a></td>
+            </tr>
+        }
+
+    </tbody>
+
+    
+</table>
+

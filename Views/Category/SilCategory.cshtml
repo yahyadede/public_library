@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "SilCategory";
+}
+
+<h2>Kategori Sil</h2>
+
+<form action="/Category/SilCategory" method="post">
+    <label>@Model.category_name isimli kategori silmek istoyor musun?</label>
+    <input type="hidden" name="category_id" value="@Model.category_id" />
+    <br />
+    <input type="submit" class="btn btn-danger" value="EVET" />
+    <a class="btn btn-info" href="/Category/Index/">HAYIR</a>
+
+</form>
+

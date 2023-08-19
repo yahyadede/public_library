@@ -1,0 +1,134 @@
+﻿@using KutuphaneSystemi.Models
+@model BorrowedBooks
+@{
+    ViewBag.Title = "BorrowBook";
+}
+
+<h2>Kitap sipariş Ver</h2>
+
+<!-- ... Your existing table ... -->
+
+@section BorrowMessage{
+    <div class="modal fade" id="borrowMessageModal" tabindex="-1" role="dialog" aria-labelledby="borrowMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="borrowMessageModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="borrowMessageText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<form action="/BorrowBooks/BorrowBook/" method="post">
+
+    <div>
+        <div class="form-group">
+
+
+            <input type="hidden" class="form-control" name="borrow_id" value="@Model.borrow_id" id="borrow_id">
+
+
+        </div>
+        <div class="form-group">
+            <label for="student_id">Öğrenci Adi </label>
+            <div class="form-floating mb-3">
+                <select class="form-select" name="student_id" id="student_id" aria-label="State">
+
+                    @foreach (Student t in ViewBag.student as List<Student>)
+                    {
+                        <option value="@t.student_id">@t.name</option>
+                    }
+                    @if (Model.Student != null)
+                    {
+                        <option value="@Model.Student.student_id" selected>@Model.Student.name</option>
+                    }
+
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="book_id">Kitap Seç </label>
+            <div class="form-floating mb-3">
+                <select class="form-select" name="book_id" id="book_id" aria-label="State">
+
+                    @foreach (Books t in ViewBag.book as List<Books>)
+                    {
+                        <option value="@t.book_id">@t.title</option>
+                    }
+                    @if (Model.Books != null)
+                    {
+                        <option value="@Model.Books.book_id" selected>@Model.Books.title</option>
+                    }
+
+
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="borrowDate">Alma Tarihi</label>
+            @if (Model != null)
+            {
+                <input type="date" class="form-control" name="borrowDate" value="@Model.borrow_date" id="borrowDate" placeholder="Alma Tarihi" required>
+            }
+            else
+            {
+                <input type="date" class="form-control" name="borrowDate" id="borrowDate" placeholder="Alma Tarihi" required>
+            }
+        </div>
+        <div class="form-group">
+            <label for="returnDate">Teslim Tarihi</label>
+            @if (Model != null)
+            {
+                <input type="date" class="form-control" name="returnDate" value="@Model.return_date" id="returnDate" placeholder="Teslim Tarihi" required>
+            }
+            else
+            {
+                <input type="date" class="form-control" name="returnDate" id="returnDate" placeholder="Teslim Tarihi" required>
+            }
+        </div>
+
+
+        <div class="col-auto">
+            <br />
+            <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#borrowMessageModal">Kitap Ödünç Al</button>
+
+        </div>
+
+    </div>
+</form>
+
+
+@section scriptMessageBorrow{
+
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+    <script>
+             $(document).ready(function () {
+            var borrowMessage = '@TempData["BorrowMessage"]';  // Get the message from TempData
+
+            if (borrowMessage) {
+                $('#borrowMessageText').text(borrowMessage);  // Set the modal message
+                $('#borrowMessageModal').modal('show');  // Show the modal
+            }
+
+            // Show the modal when the button is clicked
+            $('.btn-primary').click(function () {
+                $('#borrowMessageModal').modal('show');
+            });
+        });
+    </script>
+
+
+    
+
+}

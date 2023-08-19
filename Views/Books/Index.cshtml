@@ -1,0 +1,153 @@
+﻿@using KutuphaneSystemi.Models
+@model List<Books>
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!--<div class="container">-->
+<!-- Button to Open the Modal -->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+
+</button>-->
+@section body{
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Kitap Sil</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="mesaj"></p>
+                    <p class="hata"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                    <button type="button" class="btn btn-danger bsil">Evet</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+<h2>Kitaplar Listesi</h2>
+<div class="text-center" style="display:inline-block; margin-block-end:20px">
+    <a href="/Books/kitapEkle" class="btn btn-primary " > Yeni Kitap Ekle</a>
+
+</div>
+<table class="table table-dark" >
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Adı</th>
+            <th scope="col"> yayımlandığı yıl.</th>
+            <th scope="col"> ISBN</th>
+            <th scope="col"> dil </th>
+            <th scope="col"> Tantım </th>
+            <th scope="col"> Foto</th>
+            <th scope="col"> Mevcut Durumu</th>
+            <th scope="col"> Total kopy Sayısı</th>
+            <th scope="col"> Mevcut kopy Sayısı</th>
+            <th scope="col"> Tarih</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Books c in Model)
+        {
+            <tr>
+                <td>@c.book_id</td>
+                <td>@c.title</td>
+                <td>@c.publication_year</td>
+                <td>@c.ISBN</td>
+                <td>@c.language</td>
+                <td>@c.description</td>
+                <td>@c.cover_image</td>
+                <td>@c.status</td>
+                <td>@c.total_copies</td>
+                <td>@c.available_copies</td>
+                <td>@c.due_date</td>
+
+
+
+                <td><a class="btn btn-danger rounded bSil" data-toggle="modal" data-target="#myModal" data-bId="@c.book_id" data-bAdi="@c.title" href="#">Sil</a></td>
+
+                <td>
+                    <a class="btn btn-success rounded " href="/Books/kitapGuncelle/@c.book_id">Güncelle</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+
+</table>
+@section scripts{
+    <script src="~/Shared/jquery-1.11.1.min.js"></script>
+
+
+    <script>
+        $(".bSil").click(
+            function () {
+                $(".modal-body>p.hata").html = "";
+                var bdi = $(this).attr("data-bAdi");
+                $(".modal-body>p.mesaj").html(bdi + "  slinsin mi?");
+                var bid = $(this).attr("data-bId");
+                $(".bsil").data("bolgeid", bid);
+            }
+
+
+
+
+        );
+        $(".bsil").click(
+            function () {
+                var id = $(this).data("bolgeid");
+                // alert(id);
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Books/bookSil/" + id,
+                        success: function () {
+                            //alert("Kayit Silindi");
+                            window.location.replace("/Books/Index/");
+                        },
+                        error: function () {
+                            alert("kayit silinmedi");
+                            $(".modal-body>p.hata").html("Hata olustu");
+                        }
+                    }
+
+                );
+
+            }
+
+
+        );
+
+
+
+
+    </script>
+}
+
+
+

@@ -1,0 +1,85 @@
+﻿@using KutuphaneSystemi.Models
+@model List<BorrowedBooksView>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kitap sipariş  listesi</h2>
+
+
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Öğrenci Adı</th>
+            <th scope="col"> Kitap adı</th>
+            <th scope="col"> alma tarih</th>
+            <th scope="col"> teslim tarih</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BorrowedBooksView c in Model)
+        {
+            <tr>
+                <td>@c.borrow_id</td>
+                <td>@c.student_name</td>
+                <td>@c.book_title</td>
+                <td>@c.borrow_date</td>
+                <td>@c.return_date</td>
+
+
+
+
+               
+            </tr>
+        }
+
+    </tbody>
+
+
+
+</table>
+
+<h2>Öğrenci rezervasyon raporu</h2>
+
+
+
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Rezervasyon Id</th>
+            <th scope="col">Öğrenci Adı</th>
+            <th scope="col">Öğrenci SoyAdı</th>
+            <th scope="col">Salon</th>
+            <th scope="col">Masa</th>
+            <th scope="col">Sandalya</th>
+            <th scope="col">Tarih</th>
+            <th scope="col">Başlama vakiti</th>
+            <th scope="col">Bitiş Vakiti</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (rapor_reservation_student r in ViewBag.rapor as List<rapor_reservation_student>)
+        {
+            <tr>
+                <td>@r.reservation_id</td>
+                <td>@r.student_name</td>
+                <td>@r.student_surname</td>
+                <td>@r.room_name</td>
+                <td>@r.table_number</td>
+                <td>@r.chair_number</td>
+                <td>@r.reservation_date</td>
+                <td>@r.start_time</td>
+                <td>@r.end_time</td>
+               
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>

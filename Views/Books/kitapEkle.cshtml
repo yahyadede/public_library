@@ -1,0 +1,195 @@
+﻿@using KutuphaneSystemi.Models
+@model Books
+@{
+    ViewBag.Title = "kitapEkle";
+}
+
+<h2>kitapEkle</h2>
+
+<form action="/Books/kitapEkle" method="post">
+    <div>
+    <div class="form-group">
+        @if (Model != null)
+        {
+            <input type="hidden" class="form-control" name="book_id" value="@Model. id="book_id">
+
+        }
+        <label for="formGroupExampleInput">Kitap Adı</label>
+        @if (Model != null)
+        {
+            <input type="text" class="form-control" name="title" value="@Model.title" id="title" placeholder="Kitap Adı">
+
+        }
+        else
+        {
+            <input type="text" class="form-control" name="title" id="title" placeholder="Kitap Adı">
+
+        }
+
+    </div>
+    <div class="form-group">
+        <label for="author_id">Yazar </label>
+        <div class="form-floating mb-3">
+            <select class="form-select" name="author_id" id="author_id" aria-label="State">
+
+                @foreach (Authors t in ViewBag.authors as List<Authors>)
+                {
+                    <option value="@t.author_id">@t.author_name</option>
+                }
+                @if (Model.Authors != null)
+                {
+                    <option value="@Model.author_id" selected>@Model.Authors.author_name</option>
+                }
+
+
+            </select>
+        </div>
+       </div>
+
+    <div class="form-group">
+        <label for="publication_year">Yayın Yılı</label>
+        @if (Model != null)
+        {
+            <input type="number" class="form-control" name="publication_year" value="@Model.publication_year" id="publication_year" placeholder="Yayın Yılı" min="1000" max="9999">
+        }
+        else
+        {
+            <input type="number" class="form-control" name="publication_year" id="publication_year" placeholder="Yayın Yılı" min="1990" max="2040">
+        }
+    </div>
+        <div class="form-group">
+            <label for="ISBN">ISBN</label>
+            @if (Model != null)
+            {
+                <input type="text" class="form-control" name="ISBN" value="@Model.ISBN" id="ISBN" placeholder="ISBN">
+            }
+            else
+            {
+                <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="ISBN">
+            }
+        </div>
+        <div class="form-group">
+            <label for="category_id">Kategori ID</label>
+            <div class="form-floating mb-3">
+                <select class="form-select" name="Categories" id="CategoriesID" aria-label="State">
+
+                    @foreach (Categories t in ViewBag.categories as List<Categories>)
+                    {
+                        <option value="@t.category_id">@t.category_name</option>
+                    }
+                    @if (Model.Categories != null)
+                    {
+                        <option value="@Model.category_id" selected>@Model.Categories.category_name</option>
+                    }
+
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="language">Dil</label>
+            @if (Model != null)
+            {
+                <input type="text" class="form-control" name="language" value="@Model.language" id="language" placeholder="Dil">
+            }
+            else
+            {
+                <input type="text" class="form-control" name="language" id="language" placeholder="Dil">
+            }
+        </div>
+        <div class="form-group">
+            <label for="description">Açıklama</label>
+            @if (Model != null)
+            {
+                <textarea class="form-control" name="description" id="description" placeholder="Açıklama">@Model.description</textarea>
+            }
+            else
+            {
+                <textarea class="form-control" name="description" id="description" placeholder="Açıklama"></textarea>
+            }
+        </div>
+
+        
+        <div class="form-group">
+            <label for="cover_image">Kapak Resmi</label>
+            @if (Model != null)
+            {
+                <input type="text" class="form-control" name="cover_image" value="@Model.cover_image" id="cover_image" placeholder="Kapak Resmi">
+            }
+            else
+            {
+                <input type="text" class="form-control" name="cover_image" id="cover_image" placeholder="Kapak Resmi">
+            }
+        </div>
+        <div class="form-group">
+            <label for="status">Durum</label>
+            <select class="form-control" name="status" id="status">
+                <option value="Available" @(Model != null && Model.status == "Available" ? "selected" : "")>Mevcut</option>
+                <option value="Not Available" @(Model != null && Model.status == "Not Available" ? "selected" : "")>Mevcut Değil</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="library_id">Kütüphane ID</label>
+            <div class="form-floating mb-3">
+                <select class="form-select" name="Library" id="library_id" aria-label="State">
+
+                    @foreach (Library t in ViewBag.library as List<Library>)
+                    {
+                        <option value="@t.library_id">@t.name</option>
+                    }
+                    @if (Model.Library != null)
+                    {
+                        <option value="@Model.library_id" selected>@Model.Library.name</option>
+                    }
+
+
+                </select>
+            </div>
+
+        </div>
+        
+        <div class="form-group">
+            <label for="total_copies">Toplam Kopya Sayısı</label>
+            @if (Model != null)
+            {
+                <input type="number" class="form-control" name="total_copies" value="@Model.total_copies" id="total_copies" placeholder="Toplam Kopya Sayısı">
+            }
+            else
+            {
+                <input type="number" class="form-control" name="total_copies" id="total_copies" placeholder="Toplam Kopya Sayısı">
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="available_copies">Mevcut Kopya Sayısı</label>
+            @if (Model != null)
+            {
+                <input type="number" class="form-control" name="available_copies" value="@Model.available_copies" id="available_copies" placeholder="Mevcut Kopya Sayısı">
+            }
+            else
+            {
+                <input type="number" class="form-control" name="available_copies" id="available_copies" placeholder="Mevcut Kopya Sayısı">
+            }
+        </div>
+        
+
+        <div class="form-group">
+            <label for="due_date">Son Teslim Tarihi</label>
+            @if (Model != null)
+            {
+                <input type="date" class="form-control" name="due_date" value="@Model.due_date" id="due_date" placeholder="Son Teslim Tarihi">
+            }
+            else
+            {
+                <input type="date" class="form-control" name="due_date" id="due_date" placeholder="Son Teslim Tarihi">
+            }
+        </div>
+   
+
+    <div class="col-auto">
+        <br />
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        <button type="reset" class="btn btn-primary mb-2">Rest</button>
+    </div>
+    </div>
+</form>
